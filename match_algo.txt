@@ -1,0 +1,15 @@
+function match (letter){
+
+
+	for (i in database.id){
+		
+		t = database[i].title_temp.matcher[letter]							//Returns index of first occurence of letter in title, if no 																		//match returns -1
+		IF(t !=-1){
+			database[i].title_temp = database[i].title_temp.splice[t+1]		 // If match found for letter , cut title to only that portion  											    				// which is present after the match , eg. if letter is 'g' and  
+																		   	//title is 'algorithm' , then  set title to 'orithm' 
+		} ELSE {
+			database.remove[i]												// If no match found, remove that entry from working database
+		}
+	}
+
+}

@@ -1,0 +1,32 @@
+database = GLOBAL_DB													 	//Initially set current database to Database containing entire 
+																			  dictionary
+database_state[0] = GLOBAL_DB
+index = 0
+function autosuggest(input,n) {												// start function to get 'n' autosuggests
+
+IF input != "\s" {
+	s_terms[index] += input
+} ELSE {
+    s_terms[index] += input
+	index++
+}
+
+
+for (i=0;i<=index;i++) {
+
+database_temp = database.subset(s_terms[i])
+if database_temp != NULL
+	database_state[i+1] = database_temp
+	database = database_temp
+	
+}
+
+
+return database.top(n).title														//Assuming database is ordered by popularity of term , 																				      // return first 'n' results to be displayed as autosuggests
+}						
+
+
+
+
+NOTE - This assumes database of search terms is ordered by popularity (how to calculate popularity not defined here).
+The subset() function which matches input with database is also not defined. It mostly uses direct matching using prefix trees (since database already contains terms with minimum distance = 1 and 2 for keywords) or some algorithm using fuzzy string matching. The structure of 'database' and the top() function also not defined. Also, some sort of caching of autosuggests for popular search terms should be implemented ( in general or user-specific) leading to faster results.

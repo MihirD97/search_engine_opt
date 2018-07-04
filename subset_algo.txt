@@ -1,0 +1,31 @@
+// The subset() function is called on the global variable 'database'
+
+function subset (word) {													// Takes a single word of input at a time
+	
+	
+	IF (skip_words.matchfound?(word)==TRUE)									// If word belongs to list of words that can be skipped, skip it
+		return database
+	
+
+	IF (category.matchFound?(word) == TRUE) {								// If word matches a given category
+		return database.category(word)										// Return database of that particular category
+	}
+
+	IF (brand.matchFound?(word) == TRUE) {									// If word matches a given brand(s)
+		return database.brand(word)											// Return database of that particular brand(s)
+	}
+
+	letters = word.split													// split the word into array of constituent letters
+	for(index = 0;index<word.length,index++){								// Iterate through each letter of word
+		database_temp = database.match(word[index])							// See note for working of match function
+		IF (database_temp != NULL){
+			database = database_temp
+		}
+	}
+
+	return database
+} 
+
+NOTE : match() function matches word letter by letter IN ORDER with any word in a title in database
+eg. if 'cmp' is entered , match will look for titles in database which have the letter 'c' FIRST , THEN 'm' , THEN 'p'
+so it might return database with titles having the word 'computer' in them, by default all the entries in database are ordered by popularity. 
